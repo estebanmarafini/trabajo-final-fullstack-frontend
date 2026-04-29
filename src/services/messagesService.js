@@ -8,7 +8,9 @@ export async function getMessages(workspace_id, channel_id) {
         {
             method: 'GET',
             headers: {
-                'Authorization': 'Bearer ' + token
+                'Authorization': 'Bearer ' + token,
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache'
             }
         }
     )
