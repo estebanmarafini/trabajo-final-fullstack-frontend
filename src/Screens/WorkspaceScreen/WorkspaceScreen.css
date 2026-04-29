@@ -1,0 +1,205 @@
+/* WorkspaceScreen.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700&display=swap');
+
+:root {
+  --surface: #171f33;
+  --on-surface: #dae2fd;
+  --primary: #c0c1ff;
+  --on-primary: #1000a9;
+  --primary-container: #8083ff;
+  --outline: #908fa0;
+  --outline-variant: #464554;
+  --background: #0b1326;
+  --on-background: #dae2fd;
+  
+  --font-manrope: 'Manrope', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+  
+  --rounded-sm: 0.125rem;
+  --rounded: 0.25rem;
+  --rounded-md: 0.375rem;
+  --rounded-lg: 0.5rem;
+  --rounded-xl: 0.75rem;
+  --rounded-full: 9999px;
+  
+  --spacing-unit: 4px;
+  --container-padding: 24px;
+}
+
+.workspace-container {
+  padding: var(--container-padding);
+  background-color: var(--background);
+  color: var(--on-background);
+  min-height: 100vh;
+  font-family: var(--font-inter);
+  min-width: 320px;
+  max-width: 2000px;
+  margin: 0 auto;
+}
+
+.workspace-header {
+  padding: 10px var(--container-padding);
+  background-color: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--outline-variant);
+  margin-bottom: 20px;
+}
+
+.workspace-title {
+  margin: 0;
+  font-family: var(--font-manrope);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  color: var(--on-surface);
+}
+
+.workspace-content {
+  margin-top: 20px;
+}
+
+.workspace-content h2 {
+  font-family: var(--font-manrope);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--on-surface);
+}
+
+.channel-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.channel-item-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-unit);
+  border-radius: var(--rounded);
+  transition: background-color 0.2s;
+}
+
+.channel-item-container:hover {
+  background-color: #e5eeff; /* surface-container */
+}
+
+.channel-item {
+  cursor: pointer;
+  padding: 8px 12px;
+  font-family: var(--font-inter);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--on-surface);
+  flex: 1;
+}
+
+.channel-delete-btn {
+  background-color: transparent;
+  color: #ba1a1a;
+  border: 1px solid #ba1a1a;
+  border-radius: var(--rounded);
+  padding: 4px 8px;
+  font-family: var(--font-inter);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-right: 12px;
+  transition: all 0.2s;
+}
+
+.channel-delete-btn:hover {
+  background-color: #ffdad6;
+}
+
+.create-channel-form {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.create-channel-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #E2E8F0;
+  border-radius: var(--rounded);
+  font-family: var(--font-inter);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.create-channel-input:focus {
+  border-color: var(--primary);
+  border-width: 2px;
+  padding: 7px 11px; /* Adjust padding to prevent jumping when border thickens */
+}
+
+.create-channel-button {
+  background-color: var(--primary-container);
+  color: var(--on-primary);
+  border: none;
+  border-radius: var(--rounded);
+  padding: 8px 16px;
+  font-family: var(--font-inter);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.create-channel-button:hover:not(:disabled) {
+  background-color: var(--primary);
+}
+
+.create-channel-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.auth-button {
+  background-color: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: var(--rounded);
+  padding: 6px 12px;
+  font-family: var(--font-inter);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.auth-button:hover {
+  background-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.back-button {
+  margin-top: 30px;
+  background-color: transparent;
+  color: var(--outline);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--rounded);
+  padding: 8px 16px;
+  font-family: var(--font-inter);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  align-self: flex-start;
+}
+
+.back-button:hover {
+  background-color: var(--outline-variant);
+  color: var(--on-surface);
+}

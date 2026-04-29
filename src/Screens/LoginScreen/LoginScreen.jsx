@@ -4,6 +4,7 @@ import useForm from '../../hooks/useForm'
 import { login } from '../../services/authService'
 import useRequest from '../../hooks/useRequest'
 import { AuthContext } from '../../Context/AuthContext'
+import './LoginScreen.css'
 
 const LoginScreen = () => {
 
@@ -26,12 +27,23 @@ const LoginScreen = () => {
 
     const {manageLogin} = useContext(AuthContext)
 
+    const [formError, setFormError] = useState(null)
+
     function onLogin (formState){
+        const email = formState[LOGIN_FORM_FIELDS.EMAIL]
+        const password = formState[LOGIN_FORM_FIELDS.PASSWORD]
+
+        if(!email || !password){
+            setFormError('Todos los campos son obligatorios')
+            return
+        }
+
+        setFormError(null)
         sendRequest({
             requestCb: async () => {
                 return await login({
-                    email: formState[LOGIN_FORM_FIELDS.EMAIL],
-                    password: formState[LOGIN_FORM_FIELDS.PASSWORD]
+                    email,
+                    password
                 })
             }
         })
@@ -60,9 +72,13 @@ const LoginScreen = () => {
     useEffect(
         () => {
             //Si la respuesta es correcta
-            if(response && response.ok){
-                //Guardo el token en mi contexto
-                manageLogin(response.data.auth_token)
+            if(response){
+                if(response.ok){
+                    //Guardo el token en mi contexto
+                    manageLogin(response.data.auth_token)
+                } else {
+                    setFormError(response.message)
+                }
             }
         },
         [response]
@@ -72,34 +88,42 @@ const LoginScreen = () => {
     console.log(formState)
 
     return (
-        <div>
-            <h1>
-                Iniciar sesion
-            </h1>
-            <form onSubmit={onSubmit}>
-                <div>
-                    <label htmlFor="email">Email</label>
-                    <input 
-                        type="email" 
-                        id="email"  
-                        name={LOGIN_FORM_FIELDS.EMAIL} 
-                        onChange={handleChangeInput}
-                    />
+        <div className="auth-container">
+            <div className="auth-card">
+                <h1 className="auth-title">
+                    Iniciar sesion
+                </h1>
+                <form onSubmit={onSubmit} className="auth-form">
+                    <div className="form-group">
+                        <label htmlFor="email" className="form-label">Email</label>
+                        <input 
+                            type="email" 
+                            id="email"  
+                            name={LOGIN_FORM_FIELDS.EMAIL} 
+                            onChange={handleChangeInput}
+                            className="form-input"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password" className="form-label">Password</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name={LOGIN_FORM_FIELDS.PASSWORD} 
+                            onChange={handleChangeInput}
+                            className="form-input"
+                        />
+                    </div>
+                    {formError && <span className="form-error-message">{formError}</span>}
+                    <button type="submit" className="auth-button">
+                        {loading ? 'Cargando...' : 'Iniciar sesion'}
+                    </button>
+                </form>
+                <div className="auth-links">
+                    <div className="auth-link-item">No tienes una cuenta? <Link to="/register">Registrarse</Link></div>
+                    <div className="auth-link-item">Olvidaste tu contraseña? <Link to="/reset-password-request">Restablecer</Link></div>
                 </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name={LOGIN_FORM_FIELDS.PASSWORD} 
-                        onChange={handleChangeInput}
-                    />
-                </div>
-                <button type="submit">Iniciar sesion</button>
-            </form>
-            <span>No tienes una cuenta? <Link to="/register">Registrarse</Link></span>
-            <br/>
-            <span>Olvidaste tu contraseña? <Link to="/reset-password-request">Restablecer</Link></span>
+            </div>
         </div>
     )
 }

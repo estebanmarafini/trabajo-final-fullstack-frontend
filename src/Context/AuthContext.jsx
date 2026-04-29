@@ -31,9 +31,16 @@ function AuthContextProvider ({children}){
         navigate('/home')
     }
 
+    function manageLogout (){
+        localStorage.removeItem('auth_token_slack')
+        setIsLogged(false)
+        navigate('/login')
+    }
+
     const providerValues = {
         isLogged,
-        manageLogin
+        manageLogin,
+        manageLogout
     }
 
     return (

@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import useForm from '../../hooks/useForm'
 import useRequest from '../../hooks/useRequest'
 import { resetPasswordRequest } from '../../services/authService'
+import './ResetPasswordRequestScreen.css'
 
 const ResetPasswordRequestScreen = () => {
 
@@ -13,7 +14,6 @@ const ResetPasswordRequestScreen = () => {
     loading
   } = useRequest()
 
-  /* Hacer un formulario donde se solcite el email, este email sera usado para saber a quien debemos mandar el mail para restablecer la contraseña */
   const FORM_FIELDS = {
     EMAIL: 'email'
   }
@@ -40,48 +40,51 @@ const ResetPasswordRequestScreen = () => {
     initialFormState: initalFormState,
     submitFn: submitResetPasswordRequest
   })
-  console.log(formState)
-
 
 
   return (
-    <div>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h1 className="auth-title">Restablecer contraseña</h1>
 
-      <h1>Restablecer contraseña</h1>
-
-      {
-        response && !loading && !error ?
-          <p>{response.message}</p>
-          :
-          <>
-            <p>
-              Se enviara un mail con instrucciones para que puedas restablecer tu contraseña
-            </p>
-            <form onSubmit={onSubmit}>
-              <div>
-                <label htmlFor="email">Email:</label>
-                <input
-                  type="email"
-                  name={FORM_FIELDS.EMAIL}
-                  id="email"
-                  onChange={handleChangeInput}
-                  value={formState[FORM_FIELDS.EMAIL]}
-                />
+        {
+          response && !loading && !error ?
+            <div className="auth-success-message">{response.message}</div>
+            :
+            <>
+              <p className="auth-description">
+                Se enviara un mail con instrucciones para que puedas restablecer tu contraseña
+              </p>
+              <form onSubmit={onSubmit} className="auth-form">
+                <div className="form-group">
+                  <label htmlFor="email" className="form-label">Email:</label>
+                  <input
+                    type="email"
+                    name={FORM_FIELDS.EMAIL}
+                    id="email"
+                    onChange={handleChangeInput}
+                    value={formState[FORM_FIELDS.EMAIL]}
+                    className="form-input"
+                  />
+                </div>
+                <button type='submit' disabled={loading} className="auth-button">
+                  {loading ? 'Cargando' : 'Enviar solicitud'}
+                </button>
+              </form>
+              <div className="auth-links">
+                <div className="auth-link-item">
+                  Recuerdas tu contraseña? <Link to={'/login'}>Inciar sesion</Link>
+                </div>
+                <div className="auth-link-item">
+                  No tienes una cuenta? <Link to="/register">Registrarse</Link>
+                </div>
               </div>
-              <button type='submit' disabled={loading}>{loading ? 'Cargando' : 'Enviar solicitud'}</button>
-            </form>
-            <span>
-              Recuerdas tu contraseña? <Link to={'/login'}>Inciar sesion</Link>
-            </span>
-            <br />
-            <span>No tienes una cuenta? <Link to="/register">Registrarse</Link></span>
-          </>
-
-      }
-
-
+            </>
+        }
+      </div>
     </div>
   )
 }
+
 
 export default ResetPasswordRequestScreen

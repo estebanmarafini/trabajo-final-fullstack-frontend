@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import useRequest from "./useRequest"
-import { getWorkspaces } from "../services/workspaceService"
+import { getWorkspaces, updateWorkspaceRequest, deleteWorkspaceRequest } from "../services/workspaceService"
 
 function useWorkspaces() {
     /* 
@@ -14,24 +14,34 @@ function useWorkspaces() {
 
     const { sendRequest, response, loading, error } = useRequest()
 
+    const fetchWorkspaces = () => {
+        sendRequest({ requestCb: getWorkspaces })
+    }
+
     useEffect(
         () => {
-            sendRequest(
-                {
-                    requestCb: getWorkspaces
-                }
-            )
+            fetchWorkspaces()
         },
         []
     )
    
+    const updateWorkspace = async (workspace_id, title, description) => {
+        await updateWorkspaceRequest(workspace_id, title, description)
+        fetchWorkspaces()
+    }
 
+    const deleteWorkspace = async (workspace_id) => {
+        await deleteWorkspaceRequest(workspace_id)
+        fetchWorkspaces()
+    }
 
     return {
         response, 
         loading, 
         error,
-        workspaces: response?.data?.workspaces
+        workspaces: response?.data?.workspaces,
+        updateWorkspace,
+        deleteWorkspace
     }
 }
 
