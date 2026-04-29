@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { useParams, useNavigate } from 'react-router'
+import { useParams, useNavigate, Link } from 'react-router'
 import useWorkspace from '../../hooks/useWorkspace'
 import useChannel from '../../hooks/useChannel'
 import { AuthContext } from '../../Context/AuthContext'
@@ -28,15 +28,12 @@ const WorkspaceScreen = () => {
         }
     }
 
-    const handleChannelClick = (channel_id) => {
-        navigate(`/workspace/${workspace_id}/${channel_id}`)
-    }
 
     return (
         <div className="workspace-container">
             {workspaceLoading && <p>Cargando detalles del espacio de trabajo...</p>}
             {workspaceError && <p className="error-message">Error: {workspaceError}</p>}
-            
+
             {workspace && (
                 <>
                     <header className="workspace-header">
@@ -52,17 +49,18 @@ const WorkspaceScreen = () => {
                         ) : (
                             <ul className="channel-list">
                                 {channels.map(channel => (
-                                    <li 
-                                        key={channel._id} 
+                                    <li
+                                        key={channel._id}
                                         className="channel-item-container"
                                     >
-                                        <div 
-                                            onClick={() => handleChannelClick(channel._id)}
+                                        <Link
+                                            to={`/workspace/${workspace_id}/${channel._id}`}
                                             className="channel-item"
+                                            style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
                                         >
                                             ▶ {channel.name}
-                                        </div>
-                                        <button 
+                                        </Link>
+                                        <button
                                             onClick={async (e) => {
                                                 e.stopPropagation();
                                                 const confirmDelete = window.confirm("¿Estás seguro de eliminar este canal?");
@@ -74,7 +72,7 @@ const WorkspaceScreen = () => {
                                                         alert("Necesitas ser Creador o administrador para realizar esta operación");
                                                     }
                                                 }
-                                            }} 
+                                            }}
                                             className="channel-delete-btn"
                                         >
                                             Eliminar
@@ -85,9 +83,9 @@ const WorkspaceScreen = () => {
                         )}
 
                         <form onSubmit={handleCreateChannel} className="create-channel-form">
-                            <input 
-                                type="text" 
-                                placeholder="Nuevo canal" 
+                            <input
+                                type="text"
+                                placeholder="Nuevo canal"
                                 value={newChannelName}
                                 onChange={(e) => setNewChannelName(e.target.value)}
                                 disabled={createChannelLoading}
@@ -100,7 +98,7 @@ const WorkspaceScreen = () => {
                     </div>
                 </>
             )}
-            
+
             <button className="back-button" onClick={() => navigate('/home')}>Volver atras</button>
         </div>
     )
