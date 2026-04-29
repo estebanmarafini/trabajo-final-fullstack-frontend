@@ -47,7 +47,7 @@ export default function NewWorkspaceScreen() {
         <div className="workspace-create-container">
             <div className="workspace-create-card">
                 <h1 className="workspace-create-title">
-                    Create Workspace
+                    Nuevo Workspace
                 </h1>
 
                 <form onSubmit={onSubmit} className="workspace-create-form">
