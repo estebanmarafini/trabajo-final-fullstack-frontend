@@ -10,13 +10,13 @@ import { AuthContext } from '../Context/AuthContext'
 import { Navigate, Outlet } from 'react-router'
 
 const AuthMiddleware = () => {
-    const {isLogged} =  useContext(AuthContext)
+    const { isLogged } = useContext(AuthContext)
     return (
         <>
             {
-                isLogged 
-                ? <Outlet/>
-                : <Navigate to={'/login'}/>
+                isLogged
+                    ? <Outlet />
+                    : <Navigate to={'/login'} />
             }
         </>
     )

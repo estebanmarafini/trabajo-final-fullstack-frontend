@@ -66,9 +66,6 @@ const LoginScreen = () => {
         }
     )
 
-    /* 
-    La funcion se carga cada vez que cambie response
-    */
     useEffect(
         () => {
             //Si la respuesta es correcta
@@ -80,8 +77,11 @@ const LoginScreen = () => {
                     setFormError(response.message)
                 }
             }
+            if(error){
+                setFormError("No se pudo conectar con el servidor")
+            }
         },
-        [response]
+        [response, error]
     )
 
    

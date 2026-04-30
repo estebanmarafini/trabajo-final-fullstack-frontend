@@ -8,15 +8,18 @@ export async function getMessages(workspace_id, channel_id) {
         {
             method: 'GET',
             headers: {
-                'Authorization': 'Bearer ' + token,
-                'Cache-Control': 'no-cache',
-                'Pragma': 'no-cache'
+                'Authorization': 'Bearer ' + token
             }
         }
     )
 
     if (!response_http.ok) {
-        const errorData = await response_http.json();
+        let errorData = {};
+        try {
+            errorData = await response_http.json();
+        } catch (error) {
+            errorData.message = `Error HTTP ${response_http.status}`;
+        }
         throw new Error(errorData.message || "Failed to fetch messages");
     }
 

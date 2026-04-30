@@ -32,7 +32,7 @@ const RegisterScreen = () => {
         const password = formState[REGISTER_FORM_FIELDS.PASSWORD]
         const name = formState[REGISTER_FORM_FIELDS.NAME]
 
-        if(!email || !password || !name){
+        if (!email || !password || !name) {
             setFormError('Todos los campos son obligatorios')
             return
         }
@@ -60,18 +60,21 @@ const RegisterScreen = () => {
     }
     const { handleChangeInput, onSubmit, formState } = useForm({ initialFormState, submitFn: onRegister })
     const navigate = useNavigate()
-    useEffect (
+    useEffect(
         () => {
-            if(response){
-                if(response.ok){
+            if (response) {
+                if (response.ok) {
                     alert('Te has registrado exitosamente, te enviamos un mail con instrucciones')
                     navigate('/login')
                 } else {
                     setFormError(response.message)
                 }
             }
+            if (error) {
+                setFormError("No se pudo conectar con el servidor")
+            }
         },
-        [response]
+        [response, error]
     )
 
     return (
